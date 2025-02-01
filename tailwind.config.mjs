@@ -7,9 +7,11 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      fontFamily: {
+        sans: ['Jost', 'sans-serif'],
+      },
+      lineHeight: {
+        '14': '56px',
       },
     },
   },
