@@ -22,3 +22,26 @@ body {
 .text-brown {
   color: #ae6802;
 }
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  5% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  95% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+}
+
+.animate-fade-in-out {
+  animation: fadeInOut 3s ease-in-out;
+}

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import "./css/globals.css";
+import "react-calendar/dist/Calendar.css";
 import Header from "./components/layout/header";
 import Sidebar from "./components/layout/sidebar";
 
