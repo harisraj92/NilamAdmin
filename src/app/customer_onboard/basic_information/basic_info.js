@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { CalendarDays } from "lucide-react";
-import { validateForm, calculateAge, handleDateChange } from "./validation";
+import { validateForm, calculateAge, handleDateChange, handleImageUpload } from "./validation";
 
 
 const BasicInformation = () => {
@@ -19,17 +19,35 @@ const BasicInformation = () => {
         subscriptionPlan: "",
         subscriptionStartDate: null,
         subscriptionEndDate: null,
-        subscriptionStatus: true
+        subscriptionStatus: true,
+        profileImage: null,
     });
 
     const [showCalendar, setShowCalendar] = useState(false);
     const [showStartCalendar, setShowStartCalendar] = useState(false);
     const [showEndCalendar, setShowEndCalendar] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(null);
     const [formErrors, setFormErrors] = useState({});
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("success");
 
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        setPreviewImage(URL.createObjectURL(file)); // Show preview
+        const uploadedFilePath = await handleImageUpload(file);
+
+        if (uploadedFilePath) {
+            setSelectedImage(uploadedFilePath);
+            setFormData(prev => ({ ...prev, profileImage: uploadedFilePath }));
+        } else {
+            console.error("Failed to upload image.");
+        }
+    };
 
     const handleDateChange = (date, field) => {
         const selectedDate = new Date(date);
@@ -79,6 +97,7 @@ const BasicInformation = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const errors = validateForm(formData);
         setFormErrors(errors);
 
@@ -101,6 +120,7 @@ const BasicInformation = () => {
                 subscriptionStartDate: convertToLocalDate(formData.subscriptionStartDate),
                 subscriptionEndDate: convertToLocalDate(formData.subscriptionEndDate),
                 subscriptionStatus: formData.subscriptionStatus === "Active" ? "Active" : "Inactive",
+                profileImage: formData.profileImage || "",
             };
 
             console.log("Sending Data:", formattedData); // Debugging output
@@ -130,8 +150,11 @@ const BasicInformation = () => {
                     subscriptionPlan: "",
                     subscriptionStartDate: null,
                     subscriptionEndDate: null,
-                    subscriptionStatus: false
+                    subscriptionStatus: false,
+                    profileImage: null
                 });
+                setPreviewImage(null);
+                setSelectedImage(null);
                 setTimeout(() => setShowAlert(false), 3000);
             } else {
                 showValidationAlert(`Error: ${data.error}`);
@@ -163,7 +186,7 @@ const BasicInformation = () => {
         <div className="mx-auto">
             {showAlert && (
                 <div
-                    className={`absolute top-2 left-1/2 -translate-x-1/2 max-w-sm w-full ${alertType === "success"
+                    className={`absolute top-28 left-3/4 -translate-x-1/2 max-w-sm w-full ${alertType === "success"
                         ? "bg-green-100 border-l-4 border-green-500 text-green-700"
                         : "bg-red-100 border-l-4 border-red-500 text-red-700"
                         } p-4 rounded-md shadow-lg z-50 transition-transform duration-300 ease-in-out`}
@@ -259,7 +282,7 @@ const BasicInformation = () => {
                                     value={formData.dob ? new Date(formData.dob).toDateString() : ""}
                                     onClick={() => setShowCalendar(!showCalendar)}
                                     placeholder="Select Date"
-                                    className="flex-grow border-b border-gray-400 focus:outline-none focus:border-blue-500 px-2 py-1"
+                                    className="flex-grow border-b w-full border-gray-400 focus:outline-none focus:border-blue-500 px-2 py-1"
                                     readOnly
                                 />
 
@@ -335,6 +358,30 @@ const BasicInformation = () => {
 
                 {/* RIGHT COLUMN */}
                 <div className="space-y-6">
+
+                    <div className="flex items-center space-x-3">
+                        <label htmlFor="profileImageUpload" className="cursor-pointer">
+                            {previewImage ? (
+                                <img src={previewImage} alt="Profile Preview" className="w-40 h-40 rounded-full" />
+                            ) : (
+                                <div>
+                                    <div className="profile-icon"></div>
+                                    <p>Click here to upload Profile Image</p>
+                                </div>
+
+
+                            )}
+                        </label>
+                        <input
+                            type="file"
+                            id="profileImageUpload"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="hidden"
+                        />
+                        {selectedImage && <p className="text-sm text-gray-500">Uploaded: {selectedImage}</p>}
+                    </div>
+
                     {/* Subscription Start Date (Date Picker with Icon) */}
                     <div className="space-y-6">
                         {/* Subscription Plan Dropdown */}
@@ -429,6 +476,7 @@ const BasicInformation = () => {
                             </div>
                         )}
                     </div>
+
                 </div>
 
                 {/* Buttons */}

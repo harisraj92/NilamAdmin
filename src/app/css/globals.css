@@ -1,47 +1,43 @@
+/* Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+/* Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Jost";
-  font-weight: normal;
-  font-style: normal;
+/* Jost Font */
+.jost {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: var(--weight, 400); /* Default: Regular */
+  font-style: var(--style, normal);
 }
 
-/* Import Roboto Font */
-@font-face {
-  font-family: "Roboto";
-  font-weight: normal;
-  font-style: normal;
+/* Roboto Font */
+.roboto {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: var(--weight, 400); /* Default: Regular */
+  font-style: var(--style, normal);
+  font-variation-settings: "wdth" 100;
 }
 
+/* Apply Jost as Default */
+html,
 body {
-  font-family: "Jost", sans-serif; /* Default font */
+  font-family: "Jost", sans-serif;
 }
 
+/* Brown Text */
 .text-brown {
   color: #ae6802;
 }
 
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(-1rem);
-  }
-  5% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  95% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-1rem);
-  }
-}
-
-.animate-fade-in-out {
-  animation: fadeInOut 3s ease-in-out;
+.profile-icon {
+  background: url("/images/profile.png") no-repeat center center;
+  background-size: cover; /* Makes sure it covers the entire area */
+  width: 150px;
+  height: 150px;
+  display: inline-block;
 }

@@ -162,3 +162,29 @@ export const validateForm = (formData) => {
 
     return errors;
 };
+
+export async function handleImageUpload(file) {
+    try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("/api/customer_onboard/upload", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+
+        console.log("Upload Response:", data); // Debugging log
+
+        if (data && data.success && data.filePath) {
+            return data.filePath; // Save this path for user profile
+        } else {
+            console.error("Upload error:", data?.error || "File path is missing in the response", data);
+            return null;
+        }
+    } catch (error) {
+        console.error("Upload failed:", error);
+        return null;
+    }
+}

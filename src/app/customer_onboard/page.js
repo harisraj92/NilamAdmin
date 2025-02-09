@@ -27,8 +27,8 @@ const Customer_Onboard = () => {
                         key={index}
                         onClick={() => setActiveTab(index)}
                         className={`p-3  text-sm sm:text-base ${activeTab === index
-                            ? "bg-white border-b-2 border-black font-semibold"
-                            : "bg-gray-200 hover:bg-gray-300"
+                            ? "bg-white border-b-2 border-yellow-700 font-semibold"
+                            : "bg-yellow-700 hover:bg-gray-300"
                             } flex-1 text-center transition-all`}
                     >
                         {tab.label}
