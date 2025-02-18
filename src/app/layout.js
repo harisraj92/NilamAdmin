@@ -22,10 +22,10 @@ export default function RootLayout({ children }) {
       <meta content="width=device-width, initial-scale=1.0" name="viewport" />
       <meta name="description" content="Digital Hub for Land Information" />
       <title>NILAM Portal</title>
-      <link rel="shortcut icon" href="/images/favicon.ico" />
+      <link rel="shortcut icon" href="/images/favicons.ico" />
       <link rel="preload" href="/images/logo.svg" as="image" type="image/svg+xml" />
 
-      <body className="flex h-screen overflow-hidden">
+      <body>
         {/* Sidebar */}
         <Sidebar isMini={isMiniSidebar} isOpen={isMobileSidebarOpen} />
 
@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
             }`}
         >
           <Header toggleMiniSidebar={toggleMiniSidebar} toggleMobileSidebar={toggleMobileSidebar} />
-          <main className="p-6 pt-20 min-h-screen h-screen overflow-auto">
+          <main className="p-6 pt-20 min-h-screen h-screen">
             <div className="max-h-none overflow-visible">{children}</div>
           </main>
         </div>

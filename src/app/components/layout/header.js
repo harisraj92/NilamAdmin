@@ -17,7 +17,7 @@ const Header = ({ toggleMiniSidebar }) => {
                         height={0}
                         alt="Logo"
                         priority={true}
-                        className="w-[100px] h-auto p-3" // Increased logo size & padding
+                        className="w-[200px] h-auto" // Increased logo size & padding
                     />
                 </Link>
 

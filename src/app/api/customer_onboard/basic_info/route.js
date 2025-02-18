@@ -47,11 +47,12 @@ export async function POST(req) {
 // ✅ Handle GET request to fetch all customers
 export async function GET() {
     try {
-        const { resources } = await container.items.readAll().fetchAll();
-        return NextResponse.json({ success: true, data: resources }, { status: 200 });
+        const { resources: customers } = await container.items.query("SELECT * FROM c").fetchAll();
+        console.log("📌 All Customers in DB:", customers);
 
+        return NextResponse.json(customers, { status: 200 });
     } catch (error) {
-        console.error("Error fetching customers:", error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        console.error("❌ API Error:", error);
+        return NextResponse.json({ success: false, error: "Internal Server Error" }, { status: 500 });
     }
 }

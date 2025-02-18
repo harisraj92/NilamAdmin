@@ -1,21 +1,22 @@
 "use client";
 import React, { useState } from "react";
 import BasicInformation from "./basic_information/basic_info";
-import AddressDetails from "./address_details";
+import AddressDetails from "./address_details/address_details";
 import IdentityDocuments from "./identity_documents";
 import OccupationIncome from "./occupation_income";
 import PlotInformation from "./plot_info";
 
 const TABS = [
-    { label: "Basic Information", component: <BasicInformation /> },
-    { label: "Address Details", component: <AddressDetails /> },
-    { label: "Identity & Documents", component: <IdentityDocuments /> },
-    { label: "Occupation and Income", component: <OccupationIncome /> },
-    { label: "Plot Information", component: <PlotInformation /> },
+    { label: "Basic Information", component: "basic_info" },
+    { label: "Address Details", component: "address_details" },
+    { label: "Identity & Documents", component: "identity_documents" },
+    { label: "Occupation and Income", component: "occupation_income" },
+    { label: "Plot Information", component: "plot_info" },
 ];
 
 const Customer_Onboard = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const [customerId, setCustomerId] = useState(null);  // ✅ Store customer_id
 
     return (
         <div className="w-full mx-auto p-6">
@@ -26,9 +27,9 @@ const Customer_Onboard = () => {
                     <button
                         key={index}
                         onClick={() => setActiveTab(index)}
-                        className={`p-3  text-sm sm:text-base ${activeTab === index
-                            ? "bg-white border-b-2 border-yellow-700 font-semibold"
-                            : "bg-yellow-700 hover:bg-gray-300"
+                        className={`p-3 text-sm sm:text-base ${activeTab === index
+                            ? "bg-white border-b-2 border-primary font-semibold"
+                            : "bg-primary hover:bg-gray-300 "
                             } flex-1 text-center transition-all`}
                     >
                         {tab.label}
@@ -37,7 +38,13 @@ const Customer_Onboard = () => {
             </div>
 
             {/* Tab Content */}
-            <div className="p-2 mt-6">{TABS[activeTab].component}</div>
+            <div className="p-2 mt-6">
+                {activeTab === 0 && <BasicInformation setCustomerId={setCustomerId} />}
+                {activeTab === 1 && <AddressDetails customerId={customerId} />}
+                {activeTab === 2 && <IdentityDocuments />}
+                {activeTab === 3 && <OccupationIncome />}
+                {activeTab === 4 && <PlotInformation />}
+            </div>
         </div>
     );
 };

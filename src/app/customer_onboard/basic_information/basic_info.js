@@ -5,7 +5,7 @@ import { CalendarDays } from "lucide-react";
 import { validateForm, calculateAge, handleDateChange, handleImageUpload } from "./validation";
 
 
-const BasicInformation = () => {
+const BasicInformation = ({ setCustomerId }) => {
     const [customers, setCustomers] = useState([]);
     const [formData, setFormData] = useState({
         fullName: "",
@@ -125,7 +125,7 @@ const BasicInformation = () => {
 
             console.log("Sending Data:", formattedData); // Debugging output
 
-            const response = await fetch("/api/customer_onboard", {
+            const response = await fetch("/api/customer_onboard/basic_info", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formattedData),
@@ -138,6 +138,8 @@ const BasicInformation = () => {
                 setAlertMessage("✅ Customer onboarded successfully!");
                 setAlertType("success");
                 setShowAlert(true);
+                setCustomerId(data.data.id)
+                console.log("📌 Saved Customer ID:", data.data.id);
                 setFormData({
                     fullName: "",
                     emailid: "",
@@ -151,7 +153,7 @@ const BasicInformation = () => {
                     subscriptionStartDate: null,
                     subscriptionEndDate: null,
                     subscriptionStatus: false,
-                    profileImage: null
+                    profileImage: null,
                 });
                 setPreviewImage(null);
                 setSelectedImage(null);
@@ -169,7 +171,7 @@ const BasicInformation = () => {
 
     const fetchCustomers = async () => {
         try {
-            const response = await fetch("/api/customer_onboard");
+            const response = await fetch("/api/customer_onboard/basic_info");
             const data = await response.json();
             setCustomers(data);
         } catch (error) {
@@ -481,8 +483,7 @@ const BasicInformation = () => {
 
                 {/* Buttons */}
                 <div className="col-span-1 lg:col-span-2 flex justify-between mt-6">
-                    <button type="reset" className="bg-gray-500 text-white px-5 py-2 rounded-md w-1/3 hover:bg-gray-600 transition">Back</button>
-                    <button type="submit" onClick={handleSubmit} className="bg-blue-600 text-white px-5 py-2 rounded-md w-1/3 hover:bg-blue-700 transition">Save</button>
+                    <button type="submit" onClick={handleSubmit} className="bg-primary text-white px-5 py-2 rounded-md w-1/3 hover:bg-blue-700 transition">Save</button>
                 </div>
             </form>
 

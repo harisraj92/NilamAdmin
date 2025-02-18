@@ -168,7 +168,7 @@ export async function handleImageUpload(file) {
         const formData = new FormData();
         formData.append("file", file);
 
-        const response = await fetch("/api/customer_onboard/upload", {
+        const response = await fetch("/api/customer_onboard/basic_info/upload", {
             method: "POST",
             body: formData,
         });

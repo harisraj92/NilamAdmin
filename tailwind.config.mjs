@@ -13,6 +13,9 @@ export default {
       lineHeight: {
         '14': '56px',
       },
+      colors: {
+        primary: '#6941c6',
+      },
     },
   },
   plugins: [],
